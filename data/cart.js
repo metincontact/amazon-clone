@@ -19,7 +19,7 @@ function saveToStorage() {
 }
 
 export function addToCart(productId) {
-  let matchingItem = null;
+  let matchingItem;
 
   for (let i = 0; i < cart.length; i++) {
     if (cart[i].productId === productId) {
@@ -52,5 +52,17 @@ export function removeFromCart(productId) {
 
   cart = newCart;
 
+  saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem;
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].productId === productId) {
+      matchingItem = cart[i];
+      break;
+    }
+  }
+  matchingItem.deliveryOptionId = deliveryOptionId;
   saveToStorage();
 }
