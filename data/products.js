@@ -92,7 +92,7 @@ export function loadProducts(fun) {
     fun();
   });
 
-  xhe.addEventListener("error", (error) => {
+  xhr.addEventListener("error", (error) => {
     console.log("Unexpected error. Please try again later.");
   });
 
