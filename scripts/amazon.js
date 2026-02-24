@@ -1,13 +1,16 @@
 import { cart, addToCart } from "../data/cart.js";
-import { products } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
-let productsHTML = "";
+loadProducts(renderProductsGrid);
 
-for (let i = 0; i < products.length; i++) {
-  const product = products[i];
+function renderProductsGrid() {
+  let productsHTML = "";
 
-  productsHTML += `
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+
+    productsHTML += `
     <div class="product-container">
       <div class="product-image-container">
         <img class="product-image"
@@ -62,25 +65,26 @@ for (let i = 0; i < products.length; i++) {
       </button>
     </div>
   `;
-}
-
-document.querySelector(".js-products-grid").innerHTML = productsHTML;
-
-function updateCartQuantity() {
-  let cartQuantity = 0;
-
-  for (let i = 0; i < cart.length; i++) {
-    cartQuantity += cart[i].quantity;
   }
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-}
 
-const buttons = document.querySelectorAll(".js-add-to-cart");
+  document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener("click", function () {
-    const productId = buttons[i].dataset.productId;
-    addToCart(productId);
-    updateCartQuantity();
-  });
+  function updateCartQuantity() {
+    let cartQuantity = 0;
+
+    for (let i = 0; i < cart.length; i++) {
+      cartQuantity += cart[i].quantity;
+    }
+    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+  }
+
+  const buttons = document.querySelectorAll(".js-add-to-cart");
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", function () {
+      const productId = buttons[i].dataset.productId;
+      addToCart(productId);
+      updateCartQuantity();
+    });
+  }
 }
